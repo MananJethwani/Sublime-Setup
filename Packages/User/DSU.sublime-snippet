@@ -1,0 +1,22 @@
+<snippet>
+	<content><![CDATA[
+vector<${1:int}>${2:parent}(${3: a.size()});
+
+for(int i=0;i<a.size();i++) parent[i] = i;
+
+function<void(int)>mk_set = [&] (int v) {parent[v] = v;};
+
+function<int(int)>f_set = [&] (int v) {return parent[v] = (parent[v] == v ? v : f_set(parent[v]));};
+
+function<void(int, int)>u_set = [&] (int a, int b) {
+	if (f_set(a) != f_set(b)) {
+		parent[f_set(b)] = f_set(a);
+	}
+};
+${0}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>DSU</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.c++</scope>
+</snippet>
